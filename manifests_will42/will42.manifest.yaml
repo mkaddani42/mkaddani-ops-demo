@@ -1,43 +1,34 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: app1-deployment
   labels:
-    app: bgd
-  name: bgd
-  namespace: bgd
+    app: app1
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: bgd
-  strategy: {}
+      app: app1
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: bgd
+        app: app1
     spec:
       containers:
-      - image: quay.io/rhdevelopers/bgd:1.0.0
-        name: bgd
-        env:
-        - name: COLOR
-          value: "blue"
-        resources: {}
+      - name: app1
+        image: wil42/playground:v1
+        ports:
+        - containerPort: 8888 # containerPort: The port that each container inside a pod listens to for traffic.
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: bgd
-  name: bgd
-  namespace: bgd
+  name: app1-service
 spec:
-  ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
+  type: ClusterIP
   selector:
-    app: bgd
+    app: app1
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
 ---
