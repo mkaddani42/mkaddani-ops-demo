@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app1
-        image: wil42/playground:v1
+        image: wil42/playground:v2
         ports:
         - containerPort: 8888 # containerPort: The port that each container inside a pod listens to for traffic.
 ---
